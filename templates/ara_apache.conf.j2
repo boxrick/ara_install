@@ -1,0 +1,13 @@
+<VirtualHost *>
+    WSGIDaemonProcess ara user=www-data group=www-data threads=5
+    WSGIScriptAlias / {{ ara_server_path }}/ara.wsgi
+
+    SetEnv ANSIBLE_CONFIG {{ ara_server_path }}/ansible.cfg
+
+    <Directory {{ ara_server_path }}>
+        WSGIProcessGroup ara
+        WSGIApplicationGroup %{GLOBAL}
+        Require all granted
+        WSGIScriptReloading On
+    </Directory>
+</VirtualHost>

@@ -1,0 +1,7 @@
+# Values required for ARA runs and logging
+
+export ara_location=$(python -c "import os,ara; print(os.path.dirname(ara.__file__))")
+export ANSIBLE_CALLBACK_PLUGINS=$ara_location/plugins/callbacks
+export ANSIBLE_ACTION_PLUGINS=$ara_location/plugins/actions
+export ANSIBLE_LIBRARY=$ara_location/plugins/modules
+export ARA_DATABASE="mysql+pymysql://{{ ara_mysql_user }}:{{ ara_mysql_password }}@{{ ara_mysql_remote_host }}/ara"

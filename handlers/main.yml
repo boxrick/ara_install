@@ -1,0 +1,8 @@
+---
+# name: ara_install/handlers
+# description: All our handlers for ara_install go in here
+
+- name: restart apache2 service
+  service:
+    name: apache2
+    state: restarted

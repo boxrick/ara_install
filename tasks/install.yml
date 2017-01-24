@@ -1,0 +1,21 @@
+---
+# module: ara_install/tasks/install
+# description: Install our required packages for ara_install
+
+- name: Install all required packages for ara_install
+  apt: pkg={{ packages }} state=latest
+
+- name: Install all required packages for ara_install server
+  apt: pkg={{ ara_server_packages }} state=latest
+  when: ara_install_type == "server"
+
+- name: Enable and start Apache2
+  service:
+    name: apache2
+    state: started
+    enabled: yes
+  when: ara_install_type == "server"
+
+- name: Install ara package using PIP
+  pip:
+    name: ara

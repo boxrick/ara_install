@@ -1,0 +1,11 @@
+---
+# module: ara_install/tasks
+# description: Install ara_install onto an Ubuntu 16.xx server
+
+- include: install.yml
+
+- include: configure_server.yml
+  when: ara_install_type == "server" 
+
+- include: configure_client.yml
+  when: ara_install_type == "client"

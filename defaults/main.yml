@@ -1,0 +1,28 @@
+---
+# name: ara_install/defaults
+# description: ALL our default variables for ara_install go in here
+#------------------------------------------------------------------------------
+# Packages - All our required packages we need installing
+#------------------------------------------------------------------------------
+
+# - pre-requisites -
+packages:                             # Packages required for ARA install and usage
+    - gcc
+    - python-dev
+    - libffi-dev
+    - libssl-dev
+    - python-pip
+    - python-pymysql
+
+ara_install_type: client             # In client mode we only set up the client and set the environment variables, in server mode we set up apache and run the web application
+ara_mysql_user: blank                # What mysql user to connect to ARA 
+ara_mysql_password:  blank           # What mysql password to connect to ARA
+ara_mysql_remote_host: localhost     # What host is the mysql database stored on for ARA
+
+# Server mode config
+
+ara_server_path: /var/www/ara        # In server mode where do we host the application
+
+ara_server_packages:                     # Extra packages needed for the server install Apache and WSGI
+    - apache2
+    - libapache2-mod-wsgi

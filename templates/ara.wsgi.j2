@@ -1,0 +1,9 @@
+import os
+
+def application(environ, start_response):
+    os.environ['ANSIBLE_CONFIG'] = environ['ANSIBLE_CONFIG']
+    from ara import app as _application
+    return _application(environ, start_response)
+
+if __name__ == '__main__':
+    _application.run(threaded=True)
