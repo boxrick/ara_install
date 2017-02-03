@@ -3,4 +3,12 @@
 # description: Configure ara_install for the client
 
 - name: Create environment variables script allowing Ansible to send data back to ARA
-  template: src=ara_env_vars.sh.j2 dest="/etc/profile.d/ara_env_vars.sh.j2" owner=root group=root mode=0644
+  lineinfile:
+    dest: /etc/environment
+    line: "{{ item.line }}"
+    regexp: "{{ item.regexp }}"
+  with_items:
+    - { line: "ANSIBLE_CALLBACK_PLUGINS={{ ara_default_path }}/plugins/callbacks", regexp: "^ANSIBLE_CALLBACK_PLUGINS=" }
+    - { line: "ANSIBLE_ACTION_PLUGINS={{ ara_default_path }}/plugins/actions", regexp: "^ANSIBLE_ACTION_PLUGINS=" }
+    - { line: "ANSIBLE_LIBRARY={{ ara_default_path }}/plugins/modules", regexp: "^ANSIBLE_LIBRARY=" }
+    - { line: 'ARA_DATABASE="mysql+pymysql://{{ ara_mysql_user }}:{{ ara_mysql_password }}@{{ ara_mysql_remote_host }}/ara"', regexp: "^ARA_DATABASE=" }

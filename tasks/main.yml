@@ -9,3 +9,6 @@
 
 - include: configure_client.yml
   when: ara_install_type == "client"
+
+- include: configure_server_auth.yml
+  when: ara_apache_auth_enabled == true

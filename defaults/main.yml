@@ -18,11 +18,16 @@ ara_install_type: client             # In client mode we only set up the client 
 ara_mysql_user: blank                # What mysql user to connect to ARA 
 ara_mysql_password:  blank           # What mysql password to connect to ARA
 ara_mysql_remote_host: localhost     # What host is the mysql database stored on for ARA
+ara_default_path: /usr/local/lib/python2.7/dist-packages/ara # Where is ARA installed
 
 # Server mode config
 
 ara_server_path: /var/www/ara        # In server mode where do we host the application
 
-ara_server_packages:                     # Extra packages needed for the server install Apache and WSGI
+ara_server_packages:                 # Extra packages needed for the server install Apache and WSGI
     - apache2
     - libapache2-mod-wsgi
+
+ara_apache_auth_enabled: false       # By default ARA has no authentication, if we enable this then ARA can set up simple Apache Auth
+ara_apache_auth_user: blank          # Apache auth user
+ara_apache_auth_password: blank      # Apache auth password

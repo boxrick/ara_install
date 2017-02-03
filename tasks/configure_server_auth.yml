@@ -1,0 +1,11 @@
+---
+# module: ara_install/tasks/configure_server_auth
+# description: Configure ara_install for the ara server
+
+- name: Set up .htpasswd file to allow authentication
+  htpasswd:
+    path: "{{ ara_server_path }}/.htpasswd"
+    name: "{{ ara_apache_auth_user }}"
+    password: "{{ ara_apache_auth_password }}"
+    owner: www-data
+    group: www-data

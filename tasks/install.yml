@@ -9,6 +9,12 @@
   apt: pkg={{ ara_server_packages }} state=latest
   when: ara_install_type == "server"
 
+- name: Install password module when apache auth is enabled and server mode is on.
+  apt: pkg=python-passlib state=latest
+  when: 
+    - ara_apache_auth_enabled == true
+    - ara_install_type == "server"
+
 - name: Enable and start Apache2
   service:
     name: apache2

@@ -7,7 +7,16 @@
     <Directory {{ ara_server_path }}>
         WSGIProcessGroup ara
         WSGIApplicationGroup %{GLOBAL}
-        Require all granted
         WSGIScriptReloading On
+
+        {% if ara_apache_auth_enabled == true %}
+        AuthType Basic
+        AuthName "Restricted Content"
+        AuthUserFile /var/www/ara/.htpasswd
+        Require valid-user
+        {% else %}
+        Require all granted
+        {% endif %}
+
     </Directory>
 </VirtualHost>
