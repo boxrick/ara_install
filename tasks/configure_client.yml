@@ -8,7 +8,7 @@
     line: "{{ item.line }}"
     regexp: "{{ item.regexp }}"
   with_items:
-    - { line: "ANSIBLE_CALLBACK_PLUGINS={{ ara_default_path }}/plugins/callbacks", regexp: "^ANSIBLE_CALLBACK_PLUGINS=" }
-    - { line: "ANSIBLE_ACTION_PLUGINS={{ ara_default_path }}/plugins/actions", regexp: "^ANSIBLE_ACTION_PLUGINS=" }
-    - { line: "ANSIBLE_LIBRARY={{ ara_default_path }}/plugins/modules", regexp: "^ANSIBLE_LIBRARY=" }
+    - { line: "ANSIBLE_CALLBACK_PLUGINS={{ other_callback_paths | join(\":\") }}:{{ ara_default_path }}/plugins/callbacks", regexp: "^ANSIBLE_CALLBACK_PLUGINS=" }
+    - { line: "ANSIBLE_ACTION_PLUGINS={{ other_action_paths | join(\":\") }}:{{ ara_default_path }}/plugins/actions", regexp: "^ANSIBLE_ACTION_PLUGINS=" }
+    - { line: "ANSIBLE_LIBRARY={{ other_library_paths | join(\":\") }}:{{ ara_default_path }}/plugins/modules", regexp: "^ANSIBLE_LIBRARY=" }
     - { line: 'ARA_DATABASE="mysql+pymysql://{{ ara_mysql_user }}:{{ ara_mysql_password }}@{{ ara_mysql_remote_host }}/ara"', regexp: "^ARA_DATABASE=" }

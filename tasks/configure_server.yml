@@ -3,24 +3,51 @@
 # description: Configure ara_install for the ara server
 
 - name: Create folder path with apache permissions
-  file: path="{{ ara_server_path }}" state=directory owner=www-data group=www-data
+  file: 
+    path: "{{ ara_server_path }}" 
+    state: directory 
+    owner: www-data 
+    group: www-data
 
 - name: Create apache config for the ARA site
-  template: src=ara_apache.conf.j2 dest=/etc/apache2/sites-available/ara_apache.conf owner=www-data group=www-data
+  template: 
+    src: ara_apache.conf.j2 
+    dest: /etc/apache2/sites-available/ara_apache.conf 
+    owner: www-data
+    group: www-data
   notify: restart apache2 service
 
-- name: Create a wsgi template
-  template: src=ara.wsgi.j2 dest="{{ ara_server_path }}/ara.wsgi" owner=www-data group=www-data
+- name: Get ara wsgi path
+  command: which ara-wsgi
+  register: ara_wsgi_location
+  changed_when: false
+
+- name: Copy wsgi module
+  copy: 
+    remote_src: true
+    src: "{{ ara_wsgi_location.stdout }}"
+    dest: "{{ ara_server_path }}/" 
+    owner: www-data 
+    group: www-data
   notify: restart apache2 service
 
 - name: Create ansible ARA configuration
-  template: src=ansible.cfg.j2 dest="{{ ara_server_path }}/ansible.cfg" owner=www-data group=www-data
+  template: 
+    src: ansible.cfg.j2
+    dest: "{{ ara_server_path }}/ansible.cfg"
+    owner: www-data
+    group: www-data
   notify: restart apache2 service
 
 - name: Enable Apache module
-  file: src=/etc/apache2/sites-available/ara_apache.conf dest=/etc/apache2/sites-enabled/ara_apache.conf state=link
+  file: 
+    src: /etc/apache2/sites-available/ara_apache.conf 
+    dest: /etc/apache2/sites-enabled/ara_apache.conf
+    state: link
   notify: restart apache2 service
 
 - name: Disable default Apache module
-  file: dest=/etc/apache2/sites-enabled/000-default.conf state=absent
+  file: 
+    dest: /etc/apache2/sites-enabled/000-default.conf 
+    state: absent
   notify: restart apache2 service

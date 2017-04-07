@@ -22,6 +22,19 @@
     enabled: yes
   when: ara_install_type == "server"
 
-- name: Install ara package using PIP
+- name: Update PIP to latest version using PIP
+  pip:
+    name: pip
+    state: latest
+
+- name: Install ara package using PIP - specified version
   pip:
     name: ara
+    version: "{{ ara_version }}"
+  when: ara_version
+
+- name: Install ara package using PIP - latest version
+  pip:
+    name: ara
+    state: latest
+  when: ara_version == ""

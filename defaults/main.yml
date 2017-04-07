@@ -14,11 +14,21 @@ packages:                             # Packages required for ARA install and us
     - python-pip
     - python-pymysql
 
+ara_version: ""                      # What version of ARA should we use, if unspecified it pulls the latest
 ara_install_type: client             # In client mode we only set up the client and set the environment variables, in server mode we set up apache and run the web application
 ara_mysql_user: blank                # What mysql user to connect to ARA 
 ara_mysql_password:  blank           # What mysql password to connect to ARA
 ara_mysql_remote_host: localhost     # What host is the mysql database stored on for ARA
 ara_default_path: /usr/local/lib/python2.7/dist-packages/ara # Where is ARA installed
+
+other_callback_paths:                # Check these paths for other callback plugins
+    - /etc/ansible/roles/plugins/callback
+
+other_action_paths:                  # Check these paths for other action plugins
+    - /etc/ansible/roles/plugins/action
+
+other_library_paths:                 # Check these paths for other library plugins
+    - /etc/ansible/roles/plugins/library
 
 # Server mode config
 
@@ -31,3 +41,6 @@ ara_server_packages:                 # Extra packages needed for the server inst
 ara_apache_auth_enabled: false       # By default ARA has no authentication, if we enable this then ARA can set up simple Apache Auth
 ara_apache_auth_user: blank          # Apache auth user
 ara_apache_auth_password: blank      # Apache auth password
+
+ara_playbook_per_page: 100           # ARA is paginated, this changes the default number of playbooks per page 0 to disable pagination
+ara_result_per_page: 100             # ARA is paginated, this changes the default number of results per page 0 to disable pagination
